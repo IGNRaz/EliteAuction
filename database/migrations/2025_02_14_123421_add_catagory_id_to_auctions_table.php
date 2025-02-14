@@ -12,18 +12,15 @@ return new class extends Migration
     public function up()
     {
         Schema::table('auctions', function (Blueprint $table) {
-            $table->foreign('catagory_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('catagory_id');
         });
     }
     
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('auctions', function (Blueprint $table) {
-            Schema::dropIfExists('catagorys');
+            $table->dropColumn('catagory_id');
         });
     }
+    
 };

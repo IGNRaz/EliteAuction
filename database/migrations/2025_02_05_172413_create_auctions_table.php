@@ -22,7 +22,6 @@ return new class extends Migration
             $table->boolean('is_sold')->default(false);
             $table->foreignId('sold_to')->nullable()->constrained('users');
             $table->timestamp('sold_at')->nullable();
-            
             $table->integer("entery_fee");
             $table->integer("minumum_bid");
             $table->timestamps();
