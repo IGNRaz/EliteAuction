@@ -48,7 +48,7 @@ class User extends Authenticatable
     }
     public function doc()
     {
-        return $this->HasOne(UserDoc::class);
+        return $this->HasOne(UsersDoc::class);
     }
     public function auctions()
     {

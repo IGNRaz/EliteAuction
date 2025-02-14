@@ -37,11 +37,11 @@ class Auction extends Model
     }
     public function images()
     {
-        return $this->hasMany(AuctionImage::class);
+        return $this->hasMany(Image::class);
     }
     public function Video()
     {
-        return $this->hasMany(AuctionImage::class);
+        return $this->hasMany(Video::class);
     }
 
     
