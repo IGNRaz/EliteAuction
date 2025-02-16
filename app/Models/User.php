@@ -74,5 +74,15 @@ class User extends Authenticatable
     {
         return $this->role === 'user';
     }
-    
+   
+    public function isBanned()
+{
+    return $this->banned()->exists();
+}
+
+public function banned()
+{
+    return $this->hasOne(Banned::class);
+}
+
 }
