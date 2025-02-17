@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Banned;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -76,9 +76,10 @@ class User extends Authenticatable
     }
    
     public function isBanned()
-{
-    return $this->banned()->exists();
-}
+    {
+        return Banned::where('banned_email', $this->email)->exists();
+    }
+    
 
 public function banned()
 {

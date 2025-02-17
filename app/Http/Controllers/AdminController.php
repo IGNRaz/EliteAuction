@@ -32,22 +32,35 @@ class AdminController extends Controller
 
    
     public function banUser(Request $request, User $user)
-    {
-        Banned::create([
-            'banned_email' => $user->email,
-            'banned' => true,
-            'reason' => $request->input('reason', 'No reason provided'),
-            'expires_at' => $request->input('expires_at', null),
-            'banned_by' => Auth::user()->id
-        ]);
-    
-        return redirect()->back();
+{
+    // Check if the user is already banned
+    if (Banned::where('banned_email', $user->email)->exists()) {
+        return redirect()->back()->with('error', 'User is already banned.');
     }
+
+    Banned::create([
+        'banned_email' => $user->email,
+        'banned' => true,
+        'reason' => $request->input('reason', 'No reason provided'),
+        'expires_at' => $request->input('expires_at', null),
+        'banned_by' => Auth::id()
+    ]);
+
+    return redirect()->route('admin.users');
+}
+
     
     public function unbanUser(User $user)
     {
-        Banned::where('user_id', $user->id)->delete();
+        Banned::where('banned_email', $user->email)->delete();
         return redirect()->back();
     }
 
+    public function logs(){
+        return view('admin.control.logs');
+    }
+
+    public function auction(){
+        return view('admin.control.auctions');
+    }
 }

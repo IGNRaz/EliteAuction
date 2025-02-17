@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bans', function (Blueprint $table) {
+        Schema::create('banneds', function (Blueprint $table) {
             $table->id();
             $table->string('banned_email');
             $table->foreign('banned_email')->references('email')->on('users')->onDelete('cascade');
@@ -21,13 +21,13 @@ return new class extends Migration
             $table->foreignId('banned_by')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
-    }   
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('bans');
+        Schema::dropIfExists('banneds');
     }
 };

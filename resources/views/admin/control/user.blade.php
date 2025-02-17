@@ -28,14 +28,14 @@
                     <td>{{ $user->is_banned ? 'Banned' : 'Active' }}</td>
                     <td>
                         @if($user->isBanned())
-                        <form action="{{ route('admin.user.unban', ['user' => $user->id]) }}" method="POST">
+                        <form action="{{ route('admin.users.unban', ['user' => $user->id]) }}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-success">Unban</button>
                         </form>
                         
                         </form>
                         @else
-                        <a href="{{ route('admin.user.ban', ['user' => $user->id]) }}" class="btn btn-danger">Ban</a>
+                        <a href="{{ route('admin.users.ban.form', ['user' => $user->id]) }}" class="btn btn-danger">Ban</a>
 
                         @endif
                     </td>
