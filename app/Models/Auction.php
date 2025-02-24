@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Auction extends Model
 {
     protected $fillable = [
-        'name',
+        'title',
         'description',
         'start_date',
         'end_date',
@@ -17,7 +17,14 @@ class Auction extends Model
         'buyout_price',
         'status',
         'winner_id',
+        'price',
+        'is_active',
+        'entery_fee',
+        'minumum_bid',
+        'is_sold',
     ];
+
+    protected $casts = ["is_active" => "boolean"];
 
     public function user()
     {
@@ -39,7 +46,7 @@ class Auction extends Model
     {
         return $this->hasMany(Image::class);
     }
-    public function Video()
+    public function Videos()
     {
         return $this->hasMany(Video::class);
     }

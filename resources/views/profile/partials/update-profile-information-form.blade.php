@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <h2 class="text-lg font-medium text-black dark:text-black">
             {{ __('Profile Information') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-1 text-sm text-black-600 dark:text-black-400">
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
@@ -13,9 +13,26 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+
+        <div class="flex flex-col items-center mb-6">
+        <div class="mb-4">
+            <img id="profile-photo-preview" 
+                 src="{{ Auth::user()->getImageURL() }}"
+                 
+                 class="w-24 h-24 rounded-full mx-auto object-cover border-2 border-gray-200" 
+                 alt="Profile Image">
+            </div>
+            <div class="flex flex-col items-center">
+                
+                
+                <x-text-input id="img" name="img" type="file" class="" :value="old('img', $user->img)"  autofocus accept="image/*" onchange="document.getElementById('profile-photo-preview').src = window.URL.createObjectURL(this.files[0])" />
+                
+                <p class="text-xs text-gray-500 mt-2">JPG, PNG, GIF up to 2MB</p>
+            </div>
+        </div>
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -30,10 +47,10 @@
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
+                    <p class="text-sm mt-2 text-black-800 dark:text-black-200">
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                        <button form="send-verification" class="underline text-sm text-black-600 dark:text-black-400 hover:text-gray-900 dark:hover:text-black-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>

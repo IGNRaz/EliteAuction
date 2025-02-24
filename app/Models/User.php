@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'img',
     ];
 
     /**
@@ -86,4 +87,8 @@ public function banned()
     return $this->hasOne(Banned::class);
 }
 
+public function getImageURL()
+{
+    return $this->img ? asset('storage/' . $this->img) : asset('images/default-avatar.png');
+}
 }

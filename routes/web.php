@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -28,5 +29,10 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin/auctions', [AdminController::class, 'auction'])->name('admin.auctions');
 });
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/myAuctions', [AuctionController::class, 'myAuctions'])->name('myAcutions');
+    Route::get('/auction/{auction}', [AuctionController::class, 'viewAuctionDetails'])->name('viewAuctionDetails')->where('auction', '[0-9]+');
+    Route::get('/auction/{auction}/edit', [AuctionController::class, 'edit'])->name('editAuction')->where('auction', '[0-9]+');
+    Route::put('/auction/{auction}/update', [AuctionController::class, 'update'])->name('updateAuction')->where('auction', '[0-9]+');
+});
 require __DIR__.'/auth.php';
