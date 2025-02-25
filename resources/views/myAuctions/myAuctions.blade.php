@@ -60,12 +60,18 @@
                                 not active
                                 @endif 
                                 </div>
-                                <div>
-                                @if ($auction->is_sold == 1)
-                                is sold
-                                @else
-                                is not sold
-                                @endif 
+                                <div class="mt-2">
+                                    @if ($auction->is_active == 1)
+                                        <span class="badge bg-success">Active</span>
+                                    @else
+                                        <span class="badge bg-secondary">Inactive</span>
+                                    @endif 
+                                
+                                    @if ($auction->is_sold == 1)
+                                        <span class="badge bg-info">Sold</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">Available</span>
+                                    @endif 
                                 </div>
                                 <!-- {{ $auction->is_active  }} -->
                             </div>

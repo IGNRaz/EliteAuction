@@ -1,0 +1,1 @@
+balance:{{ Auth::user()->wallet->balance}}

@@ -63,6 +63,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Auction::class, 'winner_id');
     }
+
+    public function wallet() {
+        return $this->hasOne(Wallet::class);
+    }
+
     public function role()
     {
         return $this->role;

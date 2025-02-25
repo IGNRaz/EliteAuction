@@ -1,6 +1,9 @@
 <?php
 use App\Http\Controllers\AuctionController;
+use App\Http\Controllers\MyWalletController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UsersDocController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 
@@ -34,5 +37,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/auction/{auction}', [AuctionController::class, 'viewAuctionDetails'])->name('viewAuctionDetails')->where('auction', '[0-9]+');
     Route::get('/auction/{auction}/edit', [AuctionController::class, 'edit'])->name('editAuction')->where('auction', '[0-9]+');
     Route::put('/auction/{auction}/update', [AuctionController::class, 'update'])->name('updateAuction')->where('auction', '[0-9]+');
+    // Route::delete();
+
+    // Route::get('/MyWallet', [UsersDocController::class,"index"])->name("MyWallet");
+    Route::get('/MyWallet/add', [UsersDocController::class,"add"])->name("MyWallet.add");
+    Route::post('/MyWallet/add', [UsersDocController::class,"store"])->name("MyWallet.store");
 });
 require __DIR__.'/auth.php';

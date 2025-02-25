@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UsersDoc extends Model
 {
+    protected $table = "usersdocs";
     protected $fillable = [
         'user_id',
         'name',
@@ -16,6 +17,8 @@ class UsersDoc extends Model
         'country',
         'zip',
         'image',
+        "doc_path",
+        "doc_type",
     ];
     public function user()
     {
