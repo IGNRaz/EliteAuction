@@ -43,4 +43,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/MyWallet/add', [UsersDocController::class,"add"])->name("MyWallet.add");
     Route::post('/MyWallet/add', [UsersDocController::class,"store"])->name("MyWallet.store");
 });
+
+//فورم المزاد
+Route::get('/auction/create', [AuctionController::class, 'create'])->name('auction.create');
+Route::post('/auction/store', [AuctionController::class, 'store'])->name('auction.store');
+Route::get('/auction/index', [AuctionController::class, 'index'])->name('auction.index');
+//عرض مزادات حسب الفئة
+Route::get('/auctions/filter', [AuctionController::class, 'filterByCategory'])->name('filterAuctionsByCategory');
+//اضافة مزايدة
+Route::post('/auctions/{auction}/bid', [AuctionController::class, 'bid'])->name('auctions.bid')->middleware('auth');
+
+Route::get('/sss',function(){
+    return view('profile.edit');
+});
+
 require __DIR__.'/auth.php';

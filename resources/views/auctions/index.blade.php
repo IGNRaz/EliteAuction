@@ -1,13 +1,31 @@
-
+@include('layouts.navbar')
+@include('layouts.Sidebar')
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 <!-- <link href="{{ asset('css/auctions.css') }}" rel="stylesheet"> -->
 
 <div class="container mt-5">
-    <h1 class="mb-4">My Auctions</h1>
+    <h1 class="mb-4">Auctions</h1>
     <div class="row">
+
+        <div class="mt-4 d-flex gap-2">
+            <form action="{{ route('filterAuctionsByCategory') }}" method="GET">
+                <select name="catagory_id" class="form-select" onchange="this.form.submit()">
+                    <option value="">اختر فئة</option>
+                    @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->catagory_name }}</option>
+                @endforeach
+                </select>
+            </form>
+        </div>
+
+
+
         @forelse($auctions as $auction)
+
+
+
             <div class="col-md-6 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-header bg-primary text-white">
@@ -83,7 +101,10 @@
                             <a href="{{ route("viewAuctionDetails",[$auction->id]) }}" class="btn btn-primary flex-grow-1">
                                 <i class="fas fa-eye me-1"></i> View Details
                             </a>
+                            @if (Auth::user()->id==$auction->user_id)
                             <a href="{{ route("editAuction",[$auction->id]) }}">edit</a>
+
+                            @endif
                         </div>
 
                     </div>
@@ -99,3 +120,5 @@
         @endforelse
     </div>
 </div>
+
+@include('layouts.footer')

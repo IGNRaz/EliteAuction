@@ -1,4 +1,24 @@
+@include('layouts.navbar')
+@include('layouts.Sidebar')
 <x-app-layout>
+    @if($auction->is_active)
+    <form action="{{ route('auctions.bid', $auction) }}" method="POST" class="space-y-4">
+        @csrf
+        <label class="block text-lg font-medium text-gray-700">أدخل قيمة المزايدة</label>
+        <div class="relative">
+            <input type="number" name="bid_amount"
+                   min="{{ $auction->price + $auction->minumum_bid }}"
+                   class="block w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300"
+                   required>
+        </div>
+        <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700">
+            تقديم مزايدة
+        </button>
+    </form>
+@else
+    <p class="text-red-500 text-center font-bold">هذا المزاد منتهي</p>
+@endif
+
     <div class="container py-8">
         <div class="max-w-7xl mx-auto">
             <!-- Auction Header -->
@@ -21,14 +41,14 @@
                 <div class="lg:col-span-2">
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <div class="mb-6">
-                            <img src="{{ asset('storage/' . $auction->image) }}" 
+                            <img src="{{ asset('storage/' . $auction->image) }}"
                                  alt="{{ $auction->title }}"
                                  class="w-full h-[500px] object-cover rounded-xl shadow-md">
                         </div>
                         <div class="grid grid-cols-4 gap-4">
                             @foreach ($auction->images as $image)
                             <div class="aspect-square">
-                                <img src="{{ $image->image_path }}" 
+                                <img src="{{ $image->image_path }}"
                                      alt="Additional image"
                                      class="w-full h-full object-cover rounded-lg shadow-sm hover:opacity-75 transition-opacity cursor-pointer">
                             </div>
@@ -46,7 +66,7 @@
                             <div class="text-3xl font-bold text-indigo-600" x-data="timer('{{ $auction->end_date }}')" x-text="timeRemaining">
                             </div>
                         </div>
-                        
+
                         <!-- Auction Info -->
                         <div class="space-y-4 bg-gray-50 p-6 rounded-xl">
                             <div class="flex justify-between items-center">
@@ -66,7 +86,7 @@
                                 <span class="text-lg font-bold text-gray-900">{{ \Carbon\Carbon::parse($auction->end_date)->format('M d, Y H:i') }}</span>
                             </div>
                         </div>
-                        
+
                         <!-- Bid Form -->
                         @if($auction->status === 'active')
                             <form action="{{ route('auctions.bid', $auction) }}" method="POST" class="space-y-6">
@@ -77,9 +97,9 @@
                                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                             <span class="text-gray-500 text-lg">$</span>
                                         </div>
-                                        <input type="number" 
-                                               name="bid_amount" 
-                                               step="0.01" 
+                                        <input type="number"
+                                               name="bid_amount"
+                                               step="0.01"
                                                min="{{ $auction->current_price + $auction->minumum_bid }}"
                                                class="focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-8 pr-12 py-3 text-lg border-gray-300 rounded-lg"
                                                placeholder="Enter your bid amount">
@@ -94,7 +114,7 @@
                                 <p class="text-lg font-medium text-red-600">This auction has ended</p>
                             </div>
                         @endif
-                        
+
                         <!-- Bid History -->
                         <div class="bg-gray-50 p-6 rounded-xl">
                             <h4 class="text-xl font-bold mb-4 text-gray-900">Recent Bids</h4>
@@ -102,7 +122,7 @@
                                 @forelse($auction->bids()->latest()->take(5)->get() as $bid)
                                     <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-sm">
                                         <span class="text-gray-700">{{ $bid->user->name }}</span>
-                                        <span class="font-bold text-indigo-600">${{ number_format($bid->amount, 2) }}</span>
+                                        <span class="font-bold text-indigo-600">${{ number_format($bid->bid_amount, 2) }}</span>
                                     </div>
                                 @empty
                                     <p class="text-gray-500 text-center py-4">No bids yet</p>
@@ -146,3 +166,4 @@
     </script>
     @endpush
 </x-app-layout>
+@include('layouts.footer')
