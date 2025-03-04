@@ -19,11 +19,13 @@ class UsersDoc extends Model
         'image',
         "doc_path",
         "doc_type",
+        'is_verified',
+        'rejected_by'
     ];
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    
+
 }
 

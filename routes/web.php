@@ -30,6 +30,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::post('/ban/{user}', [AdminController::class, 'banUser'])->name('admin.users.ban')->where('user', '[0-9]+');
     Route::post('/unban/{user}', [AdminController::class, 'unbanUser'])->name('admin.users.unban')->where('user', '[0-9]+');
     Route::get('/admin/auctions', [AdminController::class, 'auction'])->name('admin.auctions');
+    //تحقق من الهوية
+    Route::get('/admin/activewallet', [AdminController::class, 'activewallet'])->name('active.wallet');
+    Route::post('/admin/activewallet/sorte/{id}', [AdminController::class, 'activewallet_sorte'])->name('active.wallet.sorte');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -53,8 +56,11 @@ Route::get('/auctions/filter', [AuctionController::class, 'filterByCategory'])->
 //اضافة مزايدة
 Route::post('/auctions/{auction}/bid', [AuctionController::class, 'bid'])->name('auctions.bid')->middleware('auth');
 
-Route::get('/sss',function(){
-    return view('profile.edit');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/wallet', [WalletController::class, 'show'])->name('wallet.show');
+    Route::post('/wallet/deposit', [WalletController::class, 'deposit'])->name('wallet.deposit');
+    Route::post('/wallet/withdraw', [WalletController::class, 'withdraw'])->name('wallet.withdraw');
 });
 
 require __DIR__.'/auth.php';

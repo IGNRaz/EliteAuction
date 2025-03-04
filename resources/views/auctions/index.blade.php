@@ -3,110 +3,72 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-<!-- <link href="{{ asset('css/auctions.css') }}" rel="stylesheet"> -->
 
-<div class="container mt-5">
-    <h1 class="mb-4">Auctions</h1>
+<div class="container mt-5" style="margin-right: 220px; max-width: calc(100% - 240px);">
+    <h1 class="mb-4 text-success text-center">Auctions</h1>
     <div class="row">
 
         <div class="mt-4 d-flex gap-2">
             <form action="{{ route('filterAuctionsByCategory') }}" method="GET">
-                <select name="catagory_id" class="form-select" onchange="this.form.submit()">
+                <select name="catagory_id" class="form-select border-success" onchange="this.form.submit()">
                     <option value="">اختر فئة</option>
                     @foreach($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->catagory_name }}</option>
-                @endforeach
+                    @endforeach
                 </select>
             </form>
         </div>
 
-
-
         @forelse($auctions as $auction)
-
-
-
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="card-title h5 mb-0">{{ $auction->title }}</h3>
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="card h-100 shadow border-success rounded">
+                    <div class="card-header bg-success text-white text-center">
+                        <h5 class="card-title mb-0">{{ $auction->title }}</h5>
                     </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <p class="card-text text-muted">{{ Str::limit($auction->description, 100) }}</p>
-                        </div>
-
-                        <div class="row g-3">
+                    <div class="card-body text-center">
+                        <p class="card-text text-muted small">{{ Str::limit($auction->description, 80) }}</p>
+                        <div class="row g-2 small">
                             <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-tag text-primary me-2"></i>
-                                    <div>
-                                        <small class="text-muted">Starting Price</small>
-                                        <div class="fw-bold">${{ number_format($auction->price, 2) }}</div>
-                                    </div>
-                                </div>
+                                <i class="fas fa-tag text-success"></i>
+                                <div><small>Starting Price</small></div>
+                                <div class="fw-bold">${{ number_format($auction->price, 2) }}</div>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-dollar-sign text-success me-2"></i>
-                                    <div>
-                                        <small class="text-muted">Current Price</small>
-                                        <div class="fw-bold">${{ number_format($auction->current_price, 2) }}</div>
-                                    </div>
-                                </div>
+                                <i class="fas fa-dollar-sign text-success"></i>
+                                <div><small>Current Price</small></div>
+                                <div class="fw-bold">${{ number_format($auction->current_price, 2) }}</div>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-clock text-warning me-2"></i>
-                                    <div>
-                                        <small class="text-muted">Ends On</small>
-                                        <div class="fw-bold">{{ \Carbon\Carbon::parse($auction->end_date)->format('M d, Y') }}</div>
-                                    </div>
-                                </div>
+                                <i class="far fa-clock text-warning"></i>
+                                <div><small>Ends On</small></div>
+                                <div class="fw-bold">{{ \Carbon\Carbon::parse($auction->end_date)->format('M d, Y') }}</div>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-gavel text-info me-2"></i>
-                                    <div>
-                                        <small class="text-muted">Min. Bid</small>
-                                        <div class="fw-bold">${{ number_format($auction->minumum_bid, 2) }}</div>
-                                    </div>
-
-                                </div>
-                                <div>
-                                @if ($auction->is_active == 1)
-                                active
-                                @else
-                                not active
-                                @endif
-                                </div>
-                                <div class="mt-2">
-                                    @if ($auction->is_active == 1)
-                                        <span class="badge bg-success">Active</span>
-                                    @else
-                                        <span class="badge bg-secondary">Inactive</span>
-                                    @endif
-
-                                    @if ($auction->is_sold == 1)
-                                        <span class="badge bg-info">Sold</span>
-                                    @else
-                                        <span class="badge bg-warning text-dark">Available</span>
-                                    @endif
-                                </div>
-                                <!-- {{ $auction->is_active  }} -->
+                                <i class="fas fa-gavel text-info"></i>
+                                <div><small>Min. Bid</small></div>
+                                <div class="fw-bold">${{ number_format($auction->minumum_bid, 2) }}</div>
                             </div>
                         </div>
-
-                        <div class="mt-4 d-flex gap-2">
-                            <a href="{{ route("viewAuctionDetails",[$auction->id]) }}" class="btn btn-primary flex-grow-1">
-                                <i class="fas fa-eye me-1"></i> View Details
-                            </a>
-                            @if (Auth::user()->id==$auction->user_id)
-                            <a href="{{ route("editAuction",[$auction->id]) }}">edit</a>
-
+                        <div class="mt-2">
+                            @if ($auction->is_active == 1)
+                                <span class="badge bg-success">Active</span>
+                            @else
+                                <span class="badge bg-secondary">Inactive</span>
+                            @endif
+                            @if ($auction->is_sold == 1)
+                                <span class="badge bg-info">Sold</span>
+                            @else
+                                <span class="badge bg-warning text-dark">Available</span>
                             @endif
                         </div>
-
+                        <div class="mt-3 d-flex justify-content-center gap-2">
+                            <a href="{{ route('viewAuctionDetails',[$auction->id]) }}" class="btn btn-sm btn-success">
+                                <i class="fas fa-eye me-1"></i> View
+                            </a>
+                            @if (Auth::user()->id==$auction->user_id)
+                            <a href="{{ route('editAuction',[$auction->id]) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

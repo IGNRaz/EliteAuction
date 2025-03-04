@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Banned;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -64,9 +65,7 @@ class User extends Authenticatable
         return $this->hasOne(Auction::class, 'winner_id');
     }
 
-    public function wallet() {
-        return $this->hasOne(Wallet::class);
-    }
+
 
     public function role()
     {
@@ -80,20 +79,25 @@ class User extends Authenticatable
     {
         return $this->role === 'user';
     }
-   
+
     public function isBanned()
     {
         return Banned::where('banned_email', $this->email)->exists();
     }
-    
 
-public function banned()
-{
-    return $this->hasOne(Banned::class);
-}
 
-public function getImageURL()
-{
-    return $this->img ? asset('storage/' . $this->img) : asset('images/default-avatar.png');
-}
+    public function banned()
+    {
+        return $this->hasOne(Banned::class);
+    }
+
+    public function getImageURL()
+    {
+        return $this->img ? asset('storage/' . $this->img) : asset('images/default-avatar.png');
+    }
+
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
 }
