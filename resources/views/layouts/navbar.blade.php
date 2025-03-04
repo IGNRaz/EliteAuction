@@ -138,5 +138,6 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#">مزادات <i class="fas fa-gavel"></i></a>
+        <a class="navbar-brand" href="{{route("home")}}">الصفحة الرئيسية <i class="fas fa-gavel"></i></a>
+        <
     </nav>

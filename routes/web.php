@@ -9,7 +9,7 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name("home");
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -45,22 +45,24 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/MyWallet', [UsersDocController::class,"index"])->name("MyWallet");
     Route::get('/MyWallet/add', [UsersDocController::class,"add"])->name("MyWallet.add");
     Route::post('/MyWallet/add', [UsersDocController::class,"store"])->name("MyWallet.store");
-});
+
+    Route::get('/wallet', [WalletController::class, 'show'])->name('wallet.show');
+    Route::post('/wallet/deposit', [WalletController::class, 'deposit'])->name('wallet.deposit');
+    Route::post('/wallet/withdraw', [WalletController::class, 'withdraw'])->name('wallet.withdraw');
 
 //فورم المزاد
 Route::get('/auction/create', [AuctionController::class, 'create'])->name('auction.create');
 Route::post('/auction/store', [AuctionController::class, 'store'])->name('auction.store');
-Route::get('/auction/index', [AuctionController::class, 'index'])->name('auction.index');
+
 //عرض مزادات حسب الفئة
 Route::get('/auctions/filter', [AuctionController::class, 'filterByCategory'])->name('filterAuctionsByCategory');
 //اضافة مزايدة
 Route::post('/auctions/{auction}/bid', [AuctionController::class, 'bid'])->name('auctions.bid')->middleware('auth');
 
-
-Route::middleware('auth')->group(function () {
-    Route::get('/wallet', [WalletController::class, 'show'])->name('wallet.show');
-    Route::post('/wallet/deposit', [WalletController::class, 'deposit'])->name('wallet.deposit');
-    Route::post('/wallet/withdraw', [WalletController::class, 'withdraw'])->name('wallet.withdraw');
 });
+
+Route::get('/auction/index', [AuctionController::class, 'index'])->name('auction.index');
+
+
 
 require __DIR__.'/auth.php';

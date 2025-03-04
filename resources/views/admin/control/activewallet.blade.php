@@ -40,6 +40,8 @@
                             @endif
 
                             <!-- نموذج قبول/رفض -->
+                            
+                            @if ($user->doc->is_verified == 0)
                             <div class="mt-3">
                                 <form action="{{ route('active.wallet.sorte', $user->doc->id) }}" method="POST" class="d-inline-block">
                                     @csrf
@@ -50,6 +52,15 @@
                                     <button type="submit" name="action" value="reject" class="btn btn-danger">رفض</button>
                                 </form>
                             </div>
+                            @else
+                            @if ($user->doc->is_verified == 1)
+                            <p class="mt-3">تمت الموافقة على الطلب.</p>
+                            @elseif ($user->doc->is_verified == 2)
+                            <p class="mt-3">تمت رفض على الطلب.</p>
+                            @endif
+                                
+                            @endif
+                           
                         </div>
                         @else
                             <p>لا توجد وثائق لهذا المستخدم.</p>

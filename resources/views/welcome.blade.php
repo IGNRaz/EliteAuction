@@ -93,12 +93,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                @auth
+                
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('profile.edit') }}"> البروفايل</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('dashboard') }}"> لوحة التحكم</a>
+                    </li>
+                @endauth
+                @guest
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('register') }}"><i class="fas fa-user-plus"></i> إنشاء حساب</a>
                 </li>
+                @endguest
             </ul>
         </div>
     </nav>
@@ -108,7 +119,7 @@
         <div class="container mt-4 text-center">
             <h1 class="display-4"><i class="fas fa-store"></i> مرحبًا بكم في موقع المزاد</h1>
             <p class="lead">استمتع بتجربة تسوق فريدة من خلال مشاركتك في المزادات الحية.</p>
-            <a href="#" class="auction-btn">عرض المزادات</a>
+            <a href="{{route('auction.index')}}" class="auction-btn">عرض المزادات</a>
         </div>
 
         <!-- Statistics Section -->
@@ -117,19 +128,19 @@
                 <div class="col-md-4">
                     <div class="stat-box">
                         <h3><i class="fas fa-users"></i></h3>
-                        <p>عدد المستخدمين: 10,000</p>
+                        <p>عدد المستخدمين</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="stat-box">
                         <h3><i class="fas fa-box"></i></h3>
-                        <p>عدد المنتجات: 5,000</p>
+                        <p>عدد المنتجات</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="stat-box">
                         <h3><i class="fas fa-gavel"></i></h3>
-                        <p>عدد المزادات النشطة: 200</p>
+                        <p>عدد المزادات النشطة</p>
                     </div>
                 </div>
             </div>

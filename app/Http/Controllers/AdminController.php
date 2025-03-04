@@ -85,7 +85,8 @@ class AdminController extends Controller
         if ($request->action == 'accept') {
             $userdoc->update([
                 'is_verified' => 1,
-                'rejected_by' => 'accept'
+                'verified_by' => Auth::user()->name,
+                'verified_at' => now()
             ]);
 
             Wallet::create([
@@ -93,8 +94,9 @@ class AdminController extends Controller
             ]);
         } else {
             $userdoc->update([
-                'is_verified' => 0,
-                'rejected_by' => 'reject'
+                'is_verified' => 2,
+                'rejected_by' => Auth::user()->name,
+                'rejected_at'=> now()
 
             ]);
         }

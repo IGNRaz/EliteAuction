@@ -20,7 +20,12 @@ class UsersDoc extends Model
         "doc_path",
         "doc_type",
         'is_verified',
-        'rejected_by'
+        'rejected_by',
+        'verified_by',
+        'verified_at',
+       'rejected_at',
+       'rejected_reason',
+       'verified_reason',
     ];
     public function user()
     {

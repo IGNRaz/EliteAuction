@@ -31,6 +31,13 @@
             <i class="fas fa-wallet"></i>
             <span class="text">محفظتي</span>
         </a>
+        @if (Auth::user()->role == 'admin')
+            
+        <a href="{{route('admin.dashboard')}}" class="left">
+            <i class="fas fa-user-shield"></i>
+            <span class="text">ADMIN DASHBOARD</span>
+        </a>
+        @endif
 
         <!-- Logout Button داخل الـ Sidebar -->
         <form action="{{ route('logout') }}" method="POST" class="mt-auto">

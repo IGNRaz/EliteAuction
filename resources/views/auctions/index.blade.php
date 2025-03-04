@@ -1,5 +1,8 @@
 @include('layouts.navbar')
+@auth
 @include('layouts.Sidebar')
+@endauth
+
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
@@ -63,11 +66,15 @@
                         </div>
                         <div class="mt-3 d-flex justify-content-center gap-2">
                             <a href="{{ route('viewAuctionDetails',[$auction->id]) }}" class="btn btn-sm btn-success">
-                                <i class="fas fa-eye me-1"></i> View
+                                <i class="fas fa-eye me-1"></i> View Details
                             </a>
-                            @if (Auth::user()->id==$auction->user_id)
-                            <a href="{{ route('editAuction',[$auction->id]) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                            @if ($auction->user_id == Auth::user()->id || Auth::user()->role == 'admin')
+                            <a href="{{ route('editAuction',[$auction->id]) }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-edit me-1"></i> تعديل
+                            </a>
                             @endif
+                            
+                            
                         </div>
                     </div>
                 </div>

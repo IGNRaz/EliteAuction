@@ -18,8 +18,8 @@ class UsersDocController extends Controller
             ->where("is_verified", 1)
             ->exists()
         ) {
-
             $wallet = Auth::user()->wallet;
+            
             return view('wallet.show', compact('wallet'));
         }
 
@@ -28,12 +28,15 @@ class UsersDocController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         // ✅ التحقق من صحة البيانات المدخلة
         $validatedData = $request->validate([
             "Document" => "required|mimes:pdf,docx,doc,jpeg,jpg|max:2048",
             "DocumentType" => "required",
-            "PhoneNumber" => "required|numeric",
         ]);
+        // dd($validatedData);
+
+        
 
         // ✅ رفع الملف وحفظه في مجلد `public/storage/user_docs`
         if ($request->hasFile('Document')) {
