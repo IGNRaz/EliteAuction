@@ -46,8 +46,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- إضافة رصيد -->
+        @if (Auth::user()->role == 'admin')
+                    <!-- إضافة رصيد -->
         <div class="card mb-4">
             <div class="card-body">
                 <h2 class="card-title">إضافة رصيد</h2>
@@ -86,6 +86,8 @@
                 </form>
             </div>
         </div>
+        @endif
+
     </div>
 </div>
 

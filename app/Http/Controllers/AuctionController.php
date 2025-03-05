@@ -84,11 +84,9 @@ class AuctionController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'end_date' => 'required|date',
-            'entery_fee' => 'required|numeric',
             'minumum_bid' => 'required|numeric',
             'catagory_id' => 'required|exists:catagorys,id',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif',
-            'videos.*' => 'mimes:mp4,mov,ogg',
         ]);
 
         // إنشاء المزاد
@@ -98,7 +96,7 @@ class AuctionController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'end_date' => $request->end_date,
-            'entery_fee' => $request->entery_fee,
+            'entery_fee' => 50,
             'minumum_bid' => $request->minumum_bid,
             'catagory_id' => $request->catagory_id,
         ]);
@@ -111,13 +109,7 @@ class AuctionController extends Controller
             }
         }
 
-        // حفظ الفيديوهات
-        if ($request->hasFile('videos')) {
-            foreach ($request->file('videos') as $video) {
-                $path = $video->store('public/videos');
-                $auction->videos()->create(['video_url' => $path]);
-            }
-        }
+        
 
         return redirect()->route('myAcutions')->with('success', 'تم إضافة المزاد بنجاح.');
     }
@@ -149,9 +141,11 @@ class AuctionController extends Controller
 
     public function bid(Request $request, Auction $auction)
     {
+        
         $request->validate([
-            'bid_amount' => 'required|integer|min:' . ($auction->price + $auction->minumum_bid),
+            'bid_amount' => 'required|integer|min:' . ($auction->bids->sum('bid_amount') + $auction->minumum_bid),
         ]);
+        
 
         $user = Auth::user();
         $wallet = $user->wallet;

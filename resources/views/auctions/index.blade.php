@@ -39,7 +39,7 @@
                             <div class="col-6">
                                 <i class="fas fa-dollar-sign text-success"></i>
                                 <div><small>Current Price</small></div>
-                                <div class="fw-bold">${{ number_format($auction->current_price, 2) }}</div>
+                                <div class="fw-bold">${{ number_format($auction->bids->sum('bid_amount'), 2) }}</div>
                             </div>
                             <div class="col-6">
                                 <i class="far fa-clock text-warning"></i>

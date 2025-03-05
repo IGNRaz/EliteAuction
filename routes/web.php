@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AuctionController;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\MyWalletController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersDocController;
@@ -58,7 +59,7 @@ Route::post('/auction/store', [AuctionController::class, 'store'])->name('auctio
 Route::get('/auctions/filter', [AuctionController::class, 'filterByCategory'])->name('filterAuctionsByCategory');
 //اضافة مزايدة
 Route::post('/auctions/{auction}/bid', [AuctionController::class, 'bid'])->name('auctions.bid')->middleware('auth');
-
+Route::put('/auction/{auction}/end/{user}', [BidController::class, 'endAuction'])->name('auction.end');
 });
 
 Route::get('/auction/index', [AuctionController::class, 'index'])->name('auction.index');

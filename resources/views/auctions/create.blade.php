@@ -25,10 +25,7 @@
             <input type="datetime-local" name="end_date" id="end_date" class="form-control form-control-sm" required>
         </div>
 
-        <div class="mb-2">
-            <label for="entery_fee" class="form-label">رسوم الدخول</label>
-            <input type="number" name="entery_fee" id="entery_fee" class="form-control form-control-sm" required>
-        </div>
+    
 
         <div class="mb-2">
             <label for="minumum_bid" class="form-label">أقل مبلغ للمزايدة</label>
@@ -49,10 +46,7 @@
             <input type="file" name="images[]" id="images" class="form-control form-control-sm" multiple>
         </div>
 
-        <div class="mb-2">
-            <label for="videos" class="form-label">الفيديوهات</label>
-            <input type="file" name="videos[]" id="videos" class="form-control form-control-sm" multiple>
-        </div>
+       
 
         <button type="submit" class="btn btn-primary btn-sm w-100">إضافة المزاد</button>
     </form>

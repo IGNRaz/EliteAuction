@@ -22,6 +22,8 @@ class Auction extends Model
         'entery_fee',
         'minumum_bid',
         'is_sold',
+        "sold_to",
+        "sold_at"
     ];
 
     protected $casts = ["is_active" => "boolean"];
@@ -46,10 +48,7 @@ class Auction extends Model
     {
         return $this->hasMany(Image::class);
     }
-    public function Videos()
-    {
-        return $this->hasMany(Video::class);
-    }
+
 
     
 }
